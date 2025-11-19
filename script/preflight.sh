@@ -6,11 +6,23 @@ set +o noglob >&/dev/null
 setopt glob no_nomatch >&/dev/null
 
 home=$HOME
-[[ -n "$SUDO_USER" && $CLASH_BASE_DIR == /root* ]] && {
-    home=$(awk -F: -v user="$SUDO_USER" '$1==user{print $6}' /etc/passwd)
-    CLASH_BASE_DIR=${CLASH_BASE_DIR/\/root/$home}
-    _load_base_dir
-}
+# [[ -n "$SUDO_USER" && $CLASH_BASE_DIR == /root* ]] && {
+#     home=$(awk -F: -v user="$SUDO_USER" '$1==user{print $6}' /etc/passwd)
+#     CLASH_BASE_DIR=${CLASH_BASE_DIR/\/root/$home}
+#     _load_base_dir
+# }
+# 改进版：仅当 CLASH_BASE_DIR 未设置或为空时才进行用户替换
+if [[ -z "$CLASH_BASE_DIR" || "$CLASH_BASE_DIR" =~ ^/root/ ]]; then
+    if [[ -n "$SUDO_USER" ]]; then
+        home=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+        if [[ -n "$home" && "$CLASH_BASE_DIR" =~ ^/root/ ]]; then
+            CLASH_BASE_DIR="${CLASH_BASE_DIR/\/root/$home}"
+        elif [[ -z "$CLASH_BASE_DIR" ]]; then
+            CLASH_BASE_DIR="$home/.clash"
+        fi
+        _load_base_dir
+    fi
+fi
 
 ZIP_BASE_DIR="${RESOURCES_BASE_DIR}/zip"
 ZIP_UI="${ZIP_BASE_DIR}/yacd.tar.xz"
