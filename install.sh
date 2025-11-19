@@ -45,4 +45,4 @@ clashsecret
 
 _okcat '🎉' 'enjoy 🎉'
 clashctl
-_quit
+# _quit
