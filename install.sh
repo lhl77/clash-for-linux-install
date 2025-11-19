@@ -39,6 +39,7 @@ _merge_config
 _set_envs
 _set_rc
 _set_init
+_create_global_symlink
 
 clashui
 clashsecret
