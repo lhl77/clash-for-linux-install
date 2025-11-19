@@ -110,6 +110,7 @@ function _quit() {
      #   exec sudo -u "$user" -- "$EXEC_SHELL" -i
     #}
     #exec "$EXEC_SHELL" -i
+    echo ""
 }
 
 function _error_quit() {
