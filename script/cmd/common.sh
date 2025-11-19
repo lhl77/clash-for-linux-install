@@ -109,7 +109,7 @@ function _quit() {
      #   [ -n "$SUDO_USER" ] && user=$SUDO_USER
      #   exec sudo -u "$user" -- "$EXEC_SHELL" -i
     #}
-    exec "$EXEC_SHELL" -i
+    #exec "$EXEC_SHELL" -i
 }
 
 function _error_quit() {
@@ -120,7 +120,7 @@ function _error_quit() {
         local msg="${emoji} $1"
         _color_log "$color" "$msg"
     }
-    exec $EXEC_SHELL -i
+    #exec $EXEC_SHELL -i
 }
 
 function _has_root() {
