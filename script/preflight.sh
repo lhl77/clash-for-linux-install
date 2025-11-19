@@ -271,6 +271,19 @@ _set_rc() {
         tee -a "$SHELL_RC_BASH" "$SHELL_RC_ZSH" >&/dev/null
     [ -n "$SHELL_RC_FISH" ] && /usr/bin/install "$SCRIPT_FISH" "$SHELL_RC_FISH"
 }
+# 替换_set_rc
+_create_global_symlink() {
+    local clashctl_script="$CLASH_CMD_DIR/clashctl.sh"
+    local symlink="/usr/local/bin/clashctl"
+
+    if [ -f "$clashctl_script" ]; then
+        sudo ln -sf "$clashctl_script" "$symlink"
+        echo "[+] 已创建全局命令: $symlink"
+    else
+        echo "[-] 未找到 clashctl.sh: $clashctl_script"
+    fi
+}
+
 _unset_rc() {
     _get_rc
     sed -i "\|clashctl.sh|d" "$SHELL_RC_BASH" "$SHELL_RC_ZSH" 2>/dev/null
