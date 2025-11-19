@@ -104,11 +104,11 @@ function _failcat() {
 }
 
 function _quit() {
-    _has_root && command -v sudo >&/dev/null && {
-        local user=root
-        [ -n "$SUDO_USER" ] && user=$SUDO_USER
-        exec sudo -u "$user" -- "$EXEC_SHELL" -i
-    }
+    # _has_root && command -v sudo >&/dev/null && {
+     #   local user=root
+     #   [ -n "$SUDO_USER" ] && user=$SUDO_USER
+     #   exec sudo -u "$user" -- "$EXEC_SHELL" -i
+    #}
     exec "$EXEC_SHELL" -i
 }
 
